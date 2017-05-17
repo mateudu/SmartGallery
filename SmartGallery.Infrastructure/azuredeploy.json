@@ -213,7 +213,7 @@
           ],
           "tags": {
             "displayName": "sites_smartgallerydemo_config"
-          },
+          }, 
           "properties": {
             "storage:connectionstring": "[Concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccounts_smartgallerystorage_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_smartgallerystorage_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
             "storage:photocontainer": "[parameters('storageAccounts_smartgallerystorage_photocontainer')]",
