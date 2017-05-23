@@ -60,11 +60,8 @@ namespace SmartGallery.Web
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
-            if (CustomAuthorizeAttribute.AuthorizationEnabled)
-            {
-                // Configure OpenID Connect middleware for each policy
-                app.UseOpenIdConnectAuthentication(CreateOptionsFromPolicy(SignUpSignInPolicyId));
-            }
+            // Configure OpenID Connect middleware for each policy
+            app.UseOpenIdConnectAuthentication(CreateOptionsFromPolicy(SignUpSignInPolicyId));
         }
 
         // Used for avoiding yellow-screen-of-death
