@@ -1,4 +1,5 @@
-﻿@if (Request.IsAuthenticated)
+﻿@using Intellipix.Extensions
+@if (Request.IsAuthenticated && CustomAuthorizeAttribute.AuthorizationEnabled)
 {
     <li>
         <a id="profile-link">@User.Identity.Name</a>
@@ -9,5 +10,8 @@
 }
 else
 {
-    <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    if (CustomAuthorizeAttribute.AuthorizationEnabled)
+    {
+        <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    }
 }

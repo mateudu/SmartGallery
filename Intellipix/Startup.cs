@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IdentityModel.Tokens;
 using System.Threading.Tasks;
+using Intellipix.Extensions;
 using Microsoft.Azure;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin;
@@ -25,6 +26,7 @@ namespace SmartGallery.Web
         private static string aadInstance = ConfigurationManager.AppSettings["b2c:AadInstance"];
         private static string tenant = ConfigurationManager.AppSettings["b2c:Tenant"];
         private static string redirectUri = ConfigurationManager.AppSettings["b2c:RedirectUri"];
+        
 
         // B2C policy identifiers
         public static string SignUpSignInPolicyId = ConfigurationManager.AppSettings["b2c:SignUpSignInPolicyId"];
@@ -49,6 +51,7 @@ namespace SmartGallery.Web
             var blobClient = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("storage:connectionstring")).CreateCloudBlobClient();
             blobClient.GetContainerReference(photoContainer).CreateIfNotExists(BlobContainerPublicAccessType.Blob);
             blobClient.GetContainerReference(thumbContainer).CreateIfNotExists(BlobContainerPublicAccessType.Blob);
+            CustomAuthorizeAttribute.AuthorizationEnabled = CloudConfigurationManager.GetSetting("configuration:useauthentication") == "true";
         }
 
         public void ConfigureAuth(IAppBuilder app)

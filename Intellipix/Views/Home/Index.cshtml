@@ -2,13 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 
+@using Intellipix.Extensions
 @using SmartGallery.Web.Models
 @using Microsoft.Owin.Infrastructure
 
 <div class="container" style="padding-top: 24px">
     <div class="row">
         <div class="col-sm-8">
-            @if (Request.IsAuthenticated)
+            @if (Request.IsAuthenticated || !CustomAuthorizeAttribute.AuthorizationEnabled)
             {
                  using (Html.BeginForm("Upload", "Pictures", FormMethod.Post, new {enctype = "multipart/form-data"}))
                  {

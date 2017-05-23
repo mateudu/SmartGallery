@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ImageResizer;
+using Intellipix.Extensions;
 using SmartGallery.Web.Models;
 using SmartGallery.Web.ViewModels;
 using Microsoft.Azure;
@@ -78,7 +79,7 @@ namespace SmartGallery.Web.Controllers
             return View(vm);
         }
 
-        [Authorize]
+        [CustomAuthorize]
         [HttpPost, Route("{name}/comment")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Comment(string name, [Bind(Include = "Message")] Comment comment)
@@ -110,14 +111,14 @@ namespace SmartGallery.Web.Controllers
                 Created = DateTime.Now,
                 Message = comment.Message,
                 PictureId = name,
-                UserId = User.Identity.Name
+                UserId = CustomAuthorizeAttribute.AuthorizationEnabled ? User.Identity.Name : ""
             };
             await _context.AddAsync(entity);
 
             return RedirectToAction("Details", new { name = name });
         }
 
-        [Authorize]
+        [CustomAuthorize]
         [HttpPost, Route("Upload")]
         public async Task<ActionResult> Upload(HttpPostedFileBase file)
         {

@@ -105,7 +105,17 @@
       "defaultValue": "https://westeurope.api.cognitive.microsoft.com/vision/v1.0",
       "type": "string"
     },
-
+    "configuration_useauthentication": {
+      "type": "string",
+      "defaultValue": "false",
+      "allowedValues": [
+        "true",
+        "false"
+      ],
+      "metadata": {
+        "description": "Use authentication. For testing purposes and hosting online without own AD B2C tenant leave 'false'"
+      }
+    },
     "b2c_tenant": {
       "defaultValue": "organizacjatest.onmicrosoft.com",
       "type": "string"
@@ -213,7 +223,7 @@
           ],
           "tags": {
             "displayName": "sites_smartgallerydemo_config"
-          }, 
+          },
           "properties": {
             "storage:connectionstring": "[Concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccounts_smartgallerystorage_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_smartgallerystorage_name')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value)]",
             "storage:photocontainer": "[parameters('storageAccounts_smartgallerystorage_photocontainer')]",
@@ -228,7 +238,8 @@
             "documentdb:host": "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', parameters('databaseAccounts_smartgallerydocdb_accountname'))).documentEndpoint]",
             "documentdb:key": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccounts_smartgallerydocdb_accountname')), '2015-04-08').primaryMasterKey]",
             "documentdb:dbname": "[parameters('databaseAccounts_smartgallerydocdb_dbname')]",
-            "vision:tagminconfidence": "[parameters('configuration_tagminconfidence')]"
+            "vision:tagminconfidence": "[parameters('configuration_tagminconfidence')]",
+            "configuration:useauthentication": "[parameters('configuration_useauthentication')]"
           }
         }
       ]
